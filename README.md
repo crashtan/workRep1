@@ -1,3 +1,3 @@
 # workRep1
 
-just a test
+Exercises and algorithm code
