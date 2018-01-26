@@ -14,7 +14,7 @@ using namespace std;
 char to_binary(char input, char* to_string);
 
 inline void test_print (const char* array) {
-	for (char i=0;i<8;i++)
+	for (char i=0;i<7;i++)
 		printf("%c",*(array+i));
 	printf("\n");
 }
@@ -23,7 +23,7 @@ int main(void) {
 	while (true) {
 		unsigned int number;
 		unsigned char ones = 0;
-		char b_string[7];
+		char b_string[9];
 
 
 		ENTER:
@@ -65,7 +65,7 @@ char to_binary(char input, char* to_string) {
 
 	for (char i=7;i>=0;i--) {
 		test_Byte = input&0x1;
-		if (!(0x1^test_Byte)) {
+		if (test_Byte==1) {
 			to_string[i]='1';
 			count++;
 		}
@@ -73,6 +73,7 @@ char to_binary(char input, char* to_string) {
 			to_string[i]='0';
 		input = input>>1;
 	}
+	to_string[8] = '\0';
 	return count;
 }
 

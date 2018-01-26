@@ -10,13 +10,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+
 int count_no_1s (int copied_Byte);
 void to_binary(int input, char* to_string);
 
 int main(void) {
 	unsigned int number = 0;
 	unsigned short int ones = 0;
-	char b_string[8];
+	char b_string[9];
 
 	puts("Enter a 16 bit Hex Number and press Enter");
 
@@ -59,12 +61,15 @@ int count_no_1s (int copied_Byte) {
 void to_binary(int input, char* to_string) {
 	unsigned short int test_Byte;
 
-	for (int i=8;i>=0;i--) {
+	for (int i=7;i>=0;i--) {
 		test_Byte = input&0x1;
-		if (!(0x1^test_Byte))
+		if (test_Byte == 0x01)
+		//if (!(0x1^test_Byte))
 			to_string[i]='1';
 		else
 			to_string[i]='0';
 		input = input>>1;
+
 	}
+	to_string[8]='\0';
 }
