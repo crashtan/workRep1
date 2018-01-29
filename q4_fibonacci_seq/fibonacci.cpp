@@ -41,7 +41,7 @@ void fibonacci_number(unsigned long int n){
 }
 
 int main (void) {
-	unsigned long int entered_number = 1;
+	long int entered_number = 1;
 
 	printf("Enter the no of fibonacci number:\n");
 	scanf("%ld", &entered_number);
