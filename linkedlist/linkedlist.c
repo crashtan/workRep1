@@ -51,9 +51,6 @@ LinkedList* get_address(const unsigned int location, LinkedList* const list_star
 	unsigned int size = list_size (list_start_address);
 	unsigned int location_copy = location;
 
-	if (location_copy > size)
-		location_copy = size;
-
 	if (location_copy>size-1) {
 		printf("Address for location %d is: NULL\n", location_copy);
 		return NULL;
@@ -92,45 +89,59 @@ void addNode(unsigned int location, char* string, LinkedList** list_start_addres
 		previous_node->nodePtr = new_node_ptr;
 	}
 	printf("----------- NEW NODE ADDED at location %d and address %d of value %s -----------\n", location_copy, new_node_ptr, *new_node_ptr->string);
-
 }
 
 // DELETE NODE =======================================================================================
 void deleteNode(unsigned int location, LinkedList** list_start_address){
-
-	unsigned int size = list_size (*list_start_address);
-	unsigned int location_copy = location;
-
-	if (location_copy > size)
-		location_copy = size;
-
-	if (location_copy == 0) {
-		LinkedList* current_node = get_address(location_copy, *list_start_address);
-		*list_start_address = current_node->nodePtr;
-		free(current_node);
-	}
+	if (*list_start_address == NULL)
+		printf("---\n EMPTY LIST \n");
 	else {
-		LinkedList* previous_node = get_address(location_copy-1, *list_start_address);
-		LinkedList* current_node = previous_node->nodePtr;
-		LinkedList* next_node = current_node->nodePtr;
+		unsigned int size = list_size (*list_start_address);
+		unsigned int location_copy = location;
 
-		free(current_node);
-		previous_node->nodePtr = next_node;
+		if (location_copy >= size)
+			location_copy = size-1;
+
+		if (location_copy == 0) {
+			LinkedList* current_node = get_address(location_copy, *list_start_address);
+			*list_start_address = current_node->nodePtr;
+			free(current_node);
+		}
+		else {
+			LinkedList* previous_node = get_address(location_copy-1, *list_start_address);
+			LinkedList* current_node = previous_node->nodePtr;
+			LinkedList* next_node = current_node->nodePtr;
+
+			free(current_node);
+			previous_node->nodePtr = next_node;
+		}
+		printf("\n========================================= Node %d DELETED ===============================\n", location_copy);
 	}
-	printf("\n========================================= Node %d DELETED ===============================\n", location_copy);
 }
 
 // CHECK IF EMPTY NODE ================================================================================
 
 unsigned int isEmptyNode(unsigned int location, LinkedList* const list_start_address) {
 
-	LinkedList* current_node = get_address(location, list_start_address);
-	if ( (current_node->string==NULL) || !strcmp(*current_node->string, "") ){
-		printf("String Location %d is empty!\n", location);
-		return 0;
-	} else {
-		printf("String Location %d is NOT empty!\n", location);
-		return 1;
+	unsigned int size = list_size (list_start_address);
+	unsigned int location_copy = location;
+
+	if (location_copy >= size)
+		location_copy = size-1;
+
+	if (list_start_address==NULL) {
+		printf("\nLIST IS EMPTY.\n");
+		return 2;
+	}
+	else {
+		LinkedList* current_node = get_address(location_copy, list_start_address);
+		if ( (current_node->string==NULL) || !strcmp(*current_node->string, "") ){
+			printf("String Location %d is empty!\n", location_copy);
+			return 0;
+		} else {
+			printf("String Location %d is NOT empty!\n", location_copy);
+			return 1;
+		}
 	}
 }
 
@@ -172,10 +183,13 @@ int main(void) {
 	printNodes(list1);
 	deleteNode(1, &list1);
 	printNodes(list1);
+	deleteNode(15, &list1);
+	printNodes(list1);
 
 	puts("\n======================================== CHECK IF EMPTY =============================================");
 	isEmptyNode(3, list1);
 	isEmptyNode(1, list1);
+	isEmptyNode(11, list1);
 
 	return 0;
 }
