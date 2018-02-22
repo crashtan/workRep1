@@ -10,17 +10,20 @@
 
 namespace volumes {
 
+
 class BoxVolume {
 public:
 	BoxVolume(int a=1, int b=1, int c=1);
-
 	virtual ~BoxVolume();
+
 	void setVolume(int a, int b, int c);
 	unsigned int getVolume();
+
 private:
 	unsigned int height;
 	unsigned int width;
 	unsigned int base;
+	static unsigned int count;
 };
 
 } /* namespace volumes */

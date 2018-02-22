@@ -6,28 +6,37 @@
  */
 
 #include "BoxVolume.h"
+#include <iostream>
+using namespace std;
 
 namespace volumes {
 
-BoxVolume::BoxVolume(int a, int b, int c) {
-	// TODO Auto-generated constructor stub
-	this->height = a;
-	this->width = b;
-	this->base= c;
-}
+	unsigned int BoxVolume::count = 0;
 
-void BoxVolume::setVolume(int a, int b, int c) {
-	this->height = a;
-	this->width = b;
-	this->base= c;
-}
+	BoxVolume::BoxVolume(int a, int b, int c) {
+		// TODO Auto-generated constructor stub
+		this->height = a;
+		this->width = b;
+		this->base= c;
 
-unsigned int BoxVolume::getVolume() {
-	return height*width*base;
-}
+		count++;
+		cout << "BoxVolume " << count <<" is born" << endl;
+	}
 
-BoxVolume::~BoxVolume() {
-	// TODO Auto-generated destructor stub
-}
+	void BoxVolume::setVolume(int a, int b, int c) {
+		this->height = a;
+		this->width = b;
+		this->base= c;
+	}
+
+	unsigned int BoxVolume::getVolume() {
+		return height*width*base;
+	}
+
+	BoxVolume::~BoxVolume() {
+		// TODO Auto-generated destructor stub
+		cout << "A BoxVolume died" << endl;
+		cout << "No of boxes are " << --count <<"."<< endl;
+	}
 
 } /* namespace volumes */
